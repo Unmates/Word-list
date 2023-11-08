@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{url_for('static',filename='favico.ico')}}" type="image/x-icon"> 
+    <link rel="icon" href="{{url_for('static',filename='favico.ico')}}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}"/>
+    <title>Word not found</title>
+    <script>
+        let suggest = {{suggest | tojson}}
+        console.log(suggest)
+        $(document).ready(function(){
+            check();
+        })
+        function check(){
+            if (suggest != ''){
+                let box = $('#suggest-box');
+                let temp=`<h3>Here are some suggested words</h2>`;
+                box.append(temp);
+                for (let i=0; i < suggest.length; i++){
+                    let word = suggest[i]
+                    let temp = `<button type="button" class="btn btn-danger mx-1 my-1" onclick="window.location.href= '/detail/${word}?status_give=new'">${word}</button>`
+                    box.append(temp)
+                };
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="banner" onclick="window.location.href= '/'"></div>
+        <div class="container">
+            <h1>Your word, "{{msg}}", could not be found</h1>
+            <hr>
+            <div id="suggest-box">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
+            </ul>
+            <p class="text-center text-muted">© 2021 Unmates Company, Inc</p>
+        </footer>
+    </div>
+</body>
+</html> 
